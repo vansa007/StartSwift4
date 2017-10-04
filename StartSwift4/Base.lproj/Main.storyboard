@@ -71,7 +71,7 @@
                                         <color key="backgroundColor" red="0.24112955729999999" green="0.60088433159999999" blue="0.87160915800000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="fPg-Nv-Ln4"/>
-                                            <constraint firstAttribute="width" constant="46" id="pQe-gy-MQw"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="pQe-gy-MQw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="NEXT">
@@ -183,7 +183,7 @@
                                 <rect key="frame" x="271" y="804" width="226" height="114"/>
                                 <color key="backgroundColor" red="0.24112955729999999" green="0.60088433159999999" blue="0.87160915800000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="226" id="cIj-A1-9n9"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="226" id="cIj-A1-9n9"/>
                                     <constraint firstAttribute="height" constant="114" id="w6o-yi-OMs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>

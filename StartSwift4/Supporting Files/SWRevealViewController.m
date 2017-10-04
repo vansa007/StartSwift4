@@ -1633,7 +1633,7 @@ const int FrontViewPositionNone = 0xff;
         if ( adjust )
         {
             [(id)controllerView setContentInset:UIEdgeInsetsMake(statusBarAdjustment(_contentView), 0, 0, 0)];
-        }
+        };
     }
     
     [view addSubview:controllerView];

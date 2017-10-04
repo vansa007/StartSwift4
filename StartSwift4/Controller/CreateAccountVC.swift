@@ -23,7 +23,8 @@ class CreateAccountVC: UIViewController {
     }
     
     //MARK: Action event
-    @IBAction func createAccountAction(_ sender: UIButton) {
+    @IBAction func createAccountAction(_ sender: RoundedButton) {
+        sender.loadingIndicator(show: true)
         guard let email = emailTf.text, emailTf.text?.isEmpty == false else { return }
         guard let pass = passwordTf.text, passwordTf.text?.isEmpty == false else { return }
         AuthService.instance.registerUser(email: email, password: pass) { (success) in
@@ -33,7 +34,10 @@ class CreateAccountVC: UIViewController {
                         print("loged in user!", AuthService.instance.authToken)
                     }
                 })
+            }else {
+                
             }
+            sender.loadingIndicator(show: false)
         }
     }
     @IBAction func pickAvatarAction(_ sender: UIButton) {

@@ -12,6 +12,8 @@ class ChannelVC: UIViewController {
 
     //visual
     @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var accountBtn: UIButton!
+    
     let ava = [#imageLiteral(resourceName: "dark1"), #imageLiteral(resourceName: "dark2"), #imageLiteral(resourceName: "dark3"), #imageLiteral(resourceName: "dark4"), #imageLiteral(resourceName: "dark5"), #imageLiteral(resourceName: "dark6"), #imageLiteral(resourceName: "dark7")]
     let dataSource = ["Nem Sothea", "Jayz Walker", "នួន វេយោ", "Voy Rathana", "Ek Choun", "Julie Ma Ma", "Sun Malen"]
     let sms = [
@@ -27,6 +29,16 @@ class ChannelVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setAccountName()
+    }
+    
+    func setAccountName() {
+        let accountName = AuthService.instance.isLoggedIn ? AuthService.instance.userEmail : "Login"
+        self.accountBtn.setTitle(accountName, for: .normal)
     }
     
     @IBAction func unWindFromLogin(unWindSeque: UIStoryboardSegue) {}
