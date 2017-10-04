@@ -249,7 +249,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Ce0-Vw-APy"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NDG-V3-V5w">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NDG-V3-V5w" customClass="RoundedButton" customModule="StartSwift4" customModuleProvider="target">
                                 <rect key="frame" x="37" y="217" width="300.5" height="47"/>
                                 <color key="backgroundColor" red="0.24112955729999999" green="0.60088433159999999" blue="0.87160915800000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -259,6 +259,11 @@
                                 <state key="normal" title="LOGIN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fdj-OV-Ywf">
                                 <rect key="frame" x="0.0" y="269" width="375" height="20"/>
@@ -350,7 +355,10 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="4nw-FN-cs4" id="KrV-Ax-ZCl"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s5g-xt-GFB">
                                         <rect key="frame" x="0.0" y="40" width="300" height="2"/>
@@ -366,7 +374,10 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="done" textContentType="email"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="4nw-FN-cs4" id="ClV-Gd-o4a"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qk9-mJ-igG">
                                         <rect key="frame" x="0.0" y="82" width="300" height="2"/>
@@ -382,7 +393,10 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES" smartDashesType="no" textContentType="password"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="4nw-FN-cs4" id="XmN-KD-Oax"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mml-xV-oJC">
                                         <rect key="frame" x="0.0" y="124" width="300" height="2"/>
@@ -412,6 +426,9 @@
                                 <state key="normal" title="Choose avatar">
                                     <color key="titleColor" red="0.24112955729999999" green="0.60088433159999999" blue="0.87160915800000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="pickAvatarAction:" destination="4nw-FN-cs4" eventType="touchUpInside" id="Lql-xk-fOm"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UiG-6y-vL9">
                                 <rect key="frame" x="104.5" y="415" width="166" height="30"/>
@@ -422,8 +439,11 @@
                                 <state key="normal" title="Generate background color">
                                     <color key="titleColor" red="0.24112955729999999" green="0.60088433159999999" blue="0.87160915800000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="pickBGColorAction:" destination="4nw-FN-cs4" eventType="touchUpInside" id="wcy-Bg-Fdy"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aN7-U9-Gtg">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aN7-U9-Gtg" customClass="RoundedButton" customModule="StartSwift4" customModuleProvider="target">
                                 <rect key="frame" x="37" y="607" width="300.5" height="45"/>
                                 <color key="backgroundColor" red="0.24112955729999999" green="0.60088433159999999" blue="0.87160915800000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -433,6 +453,14 @@
                                 <state key="normal" title="Create Account">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="createAccountAction:" destination="4nw-FN-cs4" eventType="touchUpInside" id="fJp-qM-t9W"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -450,12 +478,19 @@
                             <constraint firstItem="kqy-bR-S2E" firstAttribute="centerX" secondItem="Auc-4P-GHF" secondAttribute="centerX" id="jcV-F2-Lbg"/>
                             <constraint firstItem="UiG-6y-vL9" firstAttribute="centerX" secondItem="eaP-8P-dIx" secondAttribute="centerX" id="leC-Hr-2wR"/>
                             <constraint firstItem="8fx-gT-okS" firstAttribute="top" secondItem="Oqe-GQ-yqr" secondAttribute="top" constant="5" id="o8O-nA-kyw"/>
+                            <constraint firstItem="Oqe-GQ-yqr" firstAttribute="trailing" secondItem="S6n-oh-D5Q" secondAttribute="trailing" constant="37.5" id="uUz-iM-7yU"/>
                             <constraint firstAttribute="bottomMargin" secondItem="aN7-U9-Gtg" secondAttribute="bottom" constant="15" id="vAJ-qD-MCk"/>
                             <constraint firstItem="kqy-bR-S2E" firstAttribute="top" secondItem="Oqe-GQ-yqr" secondAttribute="top" constant="30" id="wi2-EG-CYc"/>
                             <constraint firstItem="Oqe-GQ-yqr" firstAttribute="trailing" secondItem="aN7-U9-Gtg" secondAttribute="trailing" constant="37.5" id="yfA-Om-kea"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Oqe-GQ-yqr"/>
                     </view>
+                    <connections>
+                        <outlet property="avatarUser" destination="rfp-ic-Eub" id="iVm-qH-CcG"/>
+                        <outlet property="emailTf" destination="LTj-Jo-Ysw" id="g5s-mc-K8f"/>
+                        <outlet property="passwordTf" destination="cxw-Dc-xIo" id="jyI-HG-Guk"/>
+                        <outlet property="usernameTf" destination="S6n-oh-D5Q" id="SYX-ob-edh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ET-qZ-sc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="jck-p0-wn4" userLabel="Exit" sceneMemberID="exit"/>
