@@ -14,3 +14,7 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 let LOGGED_IN_KEY = "loggedIn"
 let TOKEN_KEY = "token"
 let USER_EMAIL = "userEmail"
+
+//URL constant
+let BASE_URL = "https://letchatwithme.herokuapp.com/v1/"
+let URL_REGISTER = "\(BASE_URL)account/register"

@@ -1,0 +1,6 @@
+framework module Pods_StartSwift4 {
+  umbrella header "Pods-StartSwift4-umbrella.h"
+
+  export *
+  module * { export * }
+}
