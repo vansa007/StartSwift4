@@ -13,6 +13,7 @@ class ChannelVC: UIViewController {
     //visual
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var accountBtn: UIButton!
+    @IBOutlet weak var imgAccount: CircleImage!
     
     let ava = [#imageLiteral(resourceName: "dark1"), #imageLiteral(resourceName: "dark2"), #imageLiteral(resourceName: "dark3"), #imageLiteral(resourceName: "dark4"), #imageLiteral(resourceName: "dark5"), #imageLiteral(resourceName: "dark6"), #imageLiteral(resourceName: "dark7")]
     let dataSource = ["Nem Sothea", "Jayz Walker", "នួន វេយោ", "Voy Rathana", "Ek Choun", "Julie Ma Ma", "Sun Malen"]
@@ -29,6 +30,7 @@ class ChannelVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,12 +39,30 @@ class ChannelVC: UIViewController {
     }
     
     func setAccountName() {
-        let accountName = AuthService.instance.isLoggedIn ? AuthService.instance.userEmail : "Login"
+        var accountName = ""
+        if AuthService.instance.isLoggedIn {
+            accountName = UserDataService.instance.name.isEmpty ? "Login" : UserDataService.instance.name
+            self.imgAccount.image = UIImage(named: UserDataService.instance.avatarName)
+            self.imgAccount.backgroundColor = UserDataService.instance.createColor(component: UserDataService.instance.avatarColor)
+        }else {
+            accountName = "Login"
+            self.imgAccount.backgroundColor = UIColor.lightGray
+        }
         self.accountBtn.setTitle(accountName, for: .normal)
     }
     
     @IBAction func unWindFromLogin(unWindSeque: UIStoryboardSegue) {}
     
+    @IBAction func goLoginAction(_ sender: UIButton) {
+        if AuthService.instance.isLoggedIn {
+            let profile = ProfileVC()
+            profile.modalPresentationStyle = .custom
+            profile.modalTransitionStyle = .crossDissolve
+            self.present(profile, animated: true, completion: nil)
+        }else {
+            self.performSegue(withIdentifier: GO_LOGIN, sender: nil)
+        }
+    }
 }
 
 extension ChannelVC: UITableViewDataSource {

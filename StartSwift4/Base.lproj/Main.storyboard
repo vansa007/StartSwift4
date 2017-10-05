@@ -230,11 +230,48 @@
             </objects>
             <point key="canvasLocation" x="1082.03125" y="130.6640625"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="W7J-85-IiD">
+            <objects>
+                <viewController id="ySg-47-D9T" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0fk-xY-xo8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="epd-gG-Ahk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="bsd-Td-omi">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="pop_back_arr_icon" id="g1R-Le-lVl"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LHE-DT-RR2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2808.8000000000002" y="143.3497536945813"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="q7d-ma-aW5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ohV-4Z-fLg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fYP-s4-wX9">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ySg-47-D9T" kind="relationship" relationship="rootViewController" id="Pku-ka-Bd5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="28C-Rd-2xc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2082" y="149"/>
+        </scene>
     </scenes>
     <resources>
         <image name="beginnerBallerBG" width="414" height="736"/>
         <image name="cloudsAndOrangeOval" width="414" height="477"/>
         <image name="darkBlueBG" width="414" height="736"/>
+        <image name="pop_back_arr_icon" width="13" height="13"/>
         <image name="powerButton" width="96" height="96"/>
         <image name="rocketAndStream" width="414" height="672"/>
     </resources>

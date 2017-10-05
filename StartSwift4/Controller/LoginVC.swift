@@ -13,6 +13,7 @@ class LoginVC: UIViewController {
     //visual
     @IBOutlet weak var emailTf: UITextField!
     @IBOutlet weak var passwordTf: UITextField!
+    @IBOutlet weak var closeLink: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +28,7 @@ class LoginVC: UIViewController {
             self.passwordTf.text = ""
         }
         let okBtn = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.dismiss(animated: true, completion: {
-                //reload data
-            })
+            
         }
         if status == 1 {
             alert.addAction(okBtn)
@@ -51,9 +50,16 @@ class LoginVC: UIViewController {
         }else {
             AuthService.instance.loginUser(email: emailTf.text!, password: passwordTf.text!, completion: { (success) in
                 if success {
-                    self.myAlert(status: 1, message: "Logged successfully!", title: ":)", loginButton: sender)
+                    AuthService.instance.findUserByEmail(email: self.emailTf.text!, completion: { (success) in
+                        if success {
+                            sender.loadingIndicator(show: false)
+                            self.performSegue(withIdentifier: GO_HOME_LOGGED, sender: nil)
+                        }else {
+                            self.myAlert(status: 2, message: "Error", title: "We're sorry, please come back again.", loginButton: sender)
+                        }
+                    })
                 }else {
-                    self.myAlert(status: 2, message: "Do you want to hack?", title: ":(", loginButton: sender)
+                    self.myAlert(status: 2, message: "Email or Password incorrect, please try again or register new one.", title: ":(", loginButton: sender)
                 }
             })
         }
