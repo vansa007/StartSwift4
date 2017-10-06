@@ -18,6 +18,11 @@ class ChatVC: UIViewController {
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+        if AuthService.instance.isLoggedIn {
+            MessageService.instance.findAllChannel(completion: { (success) in
+                print("Chat: \(MessageService.instance.channels.count)")
+            })
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

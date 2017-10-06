@@ -62,6 +62,9 @@
                                     <constraint firstAttribute="width" constant="22" id="iXj-9c-2yL"/>
                                 </constraints>
                                 <state key="normal" image="addChannelButton"/>
+                                <connections>
+                                    <action selector="addChannelAction:" destination="Rdt-g5-kXd" eventType="touchUpInside" id="00e-aU-bvH"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bev-g4-umF">
                                 <rect key="frame" x="0.0" y="116" width="315" height="435"/>

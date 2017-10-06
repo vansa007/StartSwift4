@@ -44,8 +44,8 @@ class ProfileVC: UIViewController {
     @IBAction func logoutAction(_ sender: RoundedButton) {
         let login = UIStoryboard(name: GMAIL_STORYBOARD, bundle: nil).instantiateViewController(withIdentifier: LOGIN_STORYBOARD) as! LoginVC
         self.present(login, animated: true) {
-            AuthService.instance.isLoggedIn = false
             login.closeLink.isHidden = true
+            UserDataService.instance.logoutUser()
         }
     }
 }

@@ -29,6 +29,11 @@
 		39C822911F7B8731004F226D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39C8228F1F7B8731004F226D /* Main.storyboard */; };
 		39C822931F7B8731004F226D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39C822921F7B8731004F226D /* Assets.xcassets */; };
 		39C822961F7B8731004F226D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39C822941F7B8731004F226D /* LaunchScreen.storyboard */; };
+		39FCF5C41F87257F00FB1244 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCF5C31F87257F00FB1244 /* MessageService.swift */; };
+		39FCF5C61F8725AA00FB1244 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCF5C51F8725AA00FB1244 /* Channel.swift */; };
+		39FCF5C91F873A2E00FB1244 /* AddChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCF5C71F873A2E00FB1244 /* AddChannelVC.swift */; };
+		39FCF5CA1F873A2E00FB1244 /* AddChannelVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39FCF5C81F873A2E00FB1244 /* AddChannelVC.xib */; };
+		39FCF5CC1F87430F00FB1244 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCF5CB1F87430F00FB1244 /* SocketService.swift */; };
 		4E8A49870BD88B163E1BC1A9 /* Pods_StartSwift4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B413F983813807FCBB3D31 /* Pods_StartSwift4.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +66,11 @@
 		39C822921F7B8731004F226D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39C822951F7B8731004F226D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39C822971F7B8731004F226D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39FCF5C31F87257F00FB1244 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
+		39FCF5C51F8725AA00FB1244 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		39FCF5C71F873A2E00FB1244 /* AddChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelVC.swift; sourceTree = "<group>"; };
+		39FCF5C81F873A2E00FB1244 /* AddChannelVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddChannelVC.xib; sourceTree = "<group>"; };
+		39FCF5CB1F87430F00FB1244 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		6CD8891AF8B88594C8B23CD0 /* Pods-StartSwift4.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StartSwift4.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StartSwift4/Pods-StartSwift4.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +120,7 @@
 		39090BB41F83256A000807B0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				39FCF5C51F8725AA00FB1244 /* Channel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -123,6 +134,7 @@
 				39090BC11F836CBB000807B0 /* CreateAccountVC.swift */,
 				39BB7D2D1F84E37800EC9BE0 /* AvatarPickerVC.swift */,
 				390B07CA1F861705001B46B6 /* ProfileVC.swift */,
+				39FCF5C71F873A2E00FB1244 /* AddChannelVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -132,6 +144,8 @@
 			children = (
 				39090BC61F8397C9000807B0 /* AuthService.swift */,
 				39BB7D2B1F84CCD400EC9BE0 /* UserDataService.swift */,
+				39FCF5C31F87257F00FB1244 /* MessageService.swift */,
+				39FCF5CB1F87430F00FB1244 /* SocketService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -140,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				390B07CB1F861705001B46B6 /* ProfileVC.xib */,
+				39FCF5C81F873A2E00FB1244 /* AddChannelVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -264,6 +279,7 @@
 			files = (
 				39C822961F7B8731004F226D /* LaunchScreen.storyboard in Resources */,
 				39090BB71F83259E000807B0 /* Gmail.storyboard in Resources */,
+				39FCF5CA1F873A2E00FB1244 /* AddChannelVC.xib in Resources */,
 				39C822931F7B8731004F226D /* Assets.xcassets in Resources */,
 				39C822911F7B8731004F226D /* Main.storyboard in Resources */,
 				390B07CD1F861705001B46B6 /* ProfileVC.xib in Resources */,
@@ -327,6 +343,7 @@
 			files = (
 				39090BBC1F833077000807B0 /* SWRevealViewController.m in Sources */,
 				39BB7D2C1F84CCD400EC9BE0 /* UserDataService.swift in Sources */,
+				39FCF5C61F8725AA00FB1244 /* Channel.swift in Sources */,
 				398E8B891F839AFA0067140F /* Constants.swift in Sources */,
 				39090BB91F83268E000807B0 /* ChatVC.swift in Sources */,
 				390B07CC1F861705001B46B6 /* ProfileVC.swift in Sources */,
@@ -338,7 +355,10 @@
 				39090BBE1F8332BF000807B0 /* GradientView.swift in Sources */,
 				390B07D01F862047001B46B6 /* RoundedView.swift in Sources */,
 				39090BC71F8397C9000807B0 /* AuthService.swift in Sources */,
+				39FCF5CC1F87430F00FB1244 /* SocketService.swift in Sources */,
+				39FCF5C41F87257F00FB1244 /* MessageService.swift in Sources */,
 				39BB7D2E1F84E37800EC9BE0 /* AvatarPickerVC.swift in Sources */,
+				39FCF5C91F873A2E00FB1244 /* AddChannelVC.swift in Sources */,
 				39C8228C1F7B8731004F226D /* AppDelegate.swift in Sources */,
 				39090BBB1F83269E000807B0 /* ChannelVC.swift in Sources */,
 				390BF43D1F85C5A6002AC524 /* CircleImage.swift in Sources */,
