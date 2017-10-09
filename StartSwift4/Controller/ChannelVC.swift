@@ -14,12 +14,14 @@ class ChannelVC: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var accountBtn: UIButton!
     @IBOutlet weak var imgAccount: CircleImage!
+    @IBOutlet weak var myLoading: UIActivityIndicatorView!
     
     var dataSource:[Channel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
+        //NotificationCenter.default.addObserver(self, selector: #selector(setAccountName), name: SET_USER_INFO, object: nil)
         SocketService.instance.getChannel { (success) in
             if success {
                 self.myTableView.reloadData()
@@ -27,12 +29,19 @@ class ChannelVC: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.setAccountName()
     }
     
-    func setAccountName() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !AuthService.instance.isLoggedIn {
+            self.myLoading.stopAnimating()
+        }
+    }
+    
+    @objc func setAccountName() {
         var accountName = ""
         if AuthService.instance.isLoggedIn {
             accountName = UserDataService.instance.name.isEmpty ? "Login" : UserDataService.instance.name
@@ -43,6 +52,8 @@ class ChannelVC: UIViewController {
             self.imgAccount.backgroundColor = UIColor.lightGray
         }
         self.accountBtn.setTitle(accountName, for: .normal)
+        self.myTableView.reloadData()
+        self.myLoading.stopAnimating()
     }
     
     @IBAction func unWindFromLogin(unWindSeque: UIStoryboardSegue) {}
@@ -58,6 +69,7 @@ class ChannelVC: UIViewController {
         }
     }
     @IBAction func addChannelAction(_ sender: UIButton) {
+        self.myTableView.reloadData()
         let addChannel = AddChannelVC()
         addChannel.modalPresentationStyle = .custom
         addChannel.modalTransitionStyle = .crossDissolve
@@ -65,9 +77,10 @@ class ChannelVC: UIViewController {
     }
 }
 
-extension ChannelVC: UITableViewDataSource {
+extension ChannelVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //print("count: \(MessageService.instance.channels.count)")
         return MessageService.instance.channels.count > 0 ? MessageService.instance.channels.count : 1
     }
     
@@ -77,6 +90,12 @@ extension ChannelVC: UITableViewDataSource {
         cell.channelName.text = MessageService.instance.channels.count > 0 ? MessageService.instance.channels[indexPath.row].channelTitle : "No channel"
         cell.sms.text = MessageService.instance.channels.count > 0 ? MessageService.instance.channels[indexPath.row].channelDesc : "Please create channel to start chat.."
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        MessageService.instance.chSelected = MessageService.instance.channels[indexPath.row]
+        self.revealViewController().revealToggle(animated: true)
+        NotificationCenter.default.post(name: CH_SELECTED, object: nil)
     }
     
 }

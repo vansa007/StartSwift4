@@ -20,6 +20,7 @@
                 <outlet property="desc" destination="68R-m0-uFR" id="U1v-ZF-wId"/>
                 <outlet property="name" destination="DNP-Dr-Rus" id="QiD-g0-F4s"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="yConstant" destination="RO2-jO-0kl" id="79d-b6-dXZ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

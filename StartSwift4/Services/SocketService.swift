@@ -31,10 +31,48 @@ class SocketService: NSObject {
             guard let chDesc = dataArray[1] as? String else { return }
             guard let chId = dataArray[2] as? String else { return }
             let newCh = Channel(channelTitle: chName, channelDesc: chDesc, id: chId)
-            if !MessageService.instance.channels.contains(where: { (ch) -> Bool in ch.id == newCh.id }) {
-                MessageService.instance.channels.append(newCh)
-                completion(true)
+            
+            var isExist:Bool = false
+            for ch in MessageService.instance.channels {
+                if ch.id == newCh.id {
+                    isExist = true
+                }
             }
+            if !isExist {
+                MessageService.instance.channels.append(newCh)
+            }
+            completion(true)
+        }
+    }
+    func createMessage(chId: String, sms: String, data: UserDataService, completion: @escaping CompletionHandler) {
+        socket.emit("newMessage", sms, data.id, chId, data.name, data.avatarName, data.avatarColor)
+        completion(true)
+    }
+    
+    func getMessage(completion: @escaping CompletionHandler) {
+        socket.on("messageCreated") { (arr,ack) in
+            guard let smsBody = arr[0] as? String else { return }
+            guard let userId = arr[1] as? String else { return }
+            guard let chId = arr[2] as? String else { return }
+            guard let userName = arr[3] as? String else { return }
+            guard let userAvatar = arr[4] as? String else { return }
+            guard let userAvatarColor = arr[5] as? String else { return }
+            guard let smsId = arr[6] as? String else { return }
+            guard let timeStamp = arr[7] as? String else { return }
+            let message = Message(message: smsBody, userName: userName, channelId: chId, userAvatar: userAvatar, userAvatarColor: userAvatarColor, id: smsId, timeStamp: timeStamp)
+            MessageService.instance.messageData.append(message)
+            completion(true)
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+

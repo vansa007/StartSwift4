@@ -13,15 +13,32 @@ class AddChannelVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var desc: UITextField!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var yConstant: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddChannelVC.closeModal(guesture:)))
         self.bgView.addGestureRecognizer(tap)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func closeModal(guesture: UITapGestureRecognizer){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func keyboardAppear() {
+        self.yConstant.constant = -100.0
+    }
+    
+    @objc func keyboardDisappear() {
+        self.yConstant.constant = 0.0
     }
 
     @IBAction func createChannelAction(_ sender: RoundedButton) {
