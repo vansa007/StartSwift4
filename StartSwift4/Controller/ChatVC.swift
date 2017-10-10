@@ -14,8 +14,10 @@ class ChatVC: UIViewController {
     @IBOutlet weak var menuBtn: UIButton!
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var smsTextView: UITextView!
+    @IBOutlet weak var smsTextView: UITextField!
     @IBOutlet weak var bottomSmsConstant: NSLayoutConstraint!
+    @IBOutlet weak var smsG: UIView!
+    @IBOutlet weak var typingLb: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +26,7 @@ class ChatVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         
         NotificationCenter.default.addObserver(self, selector: #selector(ChatVC.settingUpScreen(notification:)), name: CH_SELECTED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setUserInfo(_:)), name: SET_USER_INFO, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard), name: Notification.Name.UIKeyboardWillShow, object: nil)
         
@@ -38,41 +41,92 @@ class ChatVC: UIViewController {
             }
             AuthService.instance.findUserByEmail(email: AuthService.instance.userEmail, completion: { (success) in
                 if success {
-                    //NotificationCenter.default.post(name: SET_USER_INFO, object: nil)
                     MessageService.instance.findAllChannel(completion: { (success) in})
                 }
             })
             
             SocketService.instance.getMessage(completion: { (success) in
                 self.myTableView.reloadData()
+                if MessageService.instance.messageData.count > 0 {
+                    let endIndex = IndexPath(row: MessageService.instance.messageData.count - 1, section: 0)
+                    self.myTableView.scrollToRow(at: endIndex, at: .bottom, animated: true)
+                }
             })
+            
+            //type user
+            SocketService.instance.getTypingUsers { (typingUsers) in
+                guard let chID = MessageService.instance.chSelected.id else { return }
+                var names = ""
+                var numberOfTypes = 0
+                for (typingUser, channel) in typingUsers {
+                    if typingUser != UserDataService.instance.name && channel == chID {
+                        if names == "" {
+                            names = typingUser
+                        }else {
+                            names = "\(names), \(typingUser)"
+                        }
+                        numberOfTypes += 1
+                    }
+                }
+                if numberOfTypes > 0 {
+                    var verb = "is"
+                    if numberOfTypes > 1 {
+                        verb = "are"
+                    }
+                    self.typingLb.text = "\(names) \(verb) typing a message"
+                }else {
+                    self.typingLb.text = ""
+                }
+            }
             
         }else {
             self.headerText.text = "Please login"
         }
     }
     
+    @objc func setUserInfo(_ notification: Notification) {
+        AuthService.instance.findUserByEmail(email: AuthService.instance.userEmail, completion: { (success) in
+            if success {
+                MessageService.instance.findAllChannel(completion: { (success) in})
+            }
+        })
+    }
+    
     @objc func settingUpScreen(notification: Notification) {
         self.headerText.text = MessageService.instance.chSelected.channelTitle
         MessageService.instance.getMessageByChannel(chId: MessageService.instance.chSelected.id) { (success) in
+            self.smsG.isHidden = false
             self.myTableView.reloadData()
-            NotificationCenter.default.removeObserver(self, name: CH_SELECTED, object: nil)
+            if MessageService.instance.messageData.count > 0 {
+                let endIndex = IndexPath(row: MessageService.instance.messageData.count - 1, section: 0)
+                self.myTableView.scrollToRow(at: endIndex, at: .bottom, animated: true)
+            }
         }
     }
     
-    @objc func hideKeyboard() {
-        //NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
+    @objc func hideKeyboard(_ noti: Notification) {
         self.bottomSmsConstant.constant = 0.0
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3, animations: {
+            
+        })
     }
     
-    @objc func showKeyboard() {
-        //NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
-        self.bottomSmsConstant.constant = 300.0
+    @objc func showKeyboard(_ noti: Notification) {
+        if let keyboardFrame: NSValue = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue{
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.bottomSmsConstant.constant = keyboardHeight
+            self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3, animations: {
+                
+            })
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: CH_SELECTED, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     @IBAction func sendSmsAction(_ sender: UIButton) {
         //MARK: send message
@@ -80,6 +134,11 @@ class ChatVC: UIViewController {
             SocketService.instance.createMessage(chId: MessageService.instance.chSelected.id, sms: messageDetail, data: UserDataService.instance) { (success) in
                 if success {
                     NotificationCenter.default.post(name: CH_SELECTED, object: nil)
+                    self.view.endEditing(true)
+                    self.smsTextView.text = ""
+                    guard let chId = MessageService.instance.chSelected.id else { return }
+                    self.isTyping = false
+                    SocketService.instance.socket.emit("stopType", UserDataService.instance.name, chId)
                 }
             }
         }else {
@@ -93,7 +152,21 @@ class ChatVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
+    var isTyping: Bool = false
+    @IBAction func typingAction(_ sender: UITextField) {
+        guard let chId = MessageService.instance.chSelected.id else { return }
+        if self.smsTextView.text == "" {
+            isTyping = false
+            SocketService.instance.socket.emit("stopType", UserDataService.instance.name, chId)
+        }else {
+            if !isTyping {
+                SocketService.instance.socket.emit("startType", UserDataService.instance.name, chId)
+            }
+            isTyping = true
+        }
+    }
+    
 }
 
 extension ChatVC: UITableViewDataSource {
@@ -109,12 +182,9 @@ extension ChatVC: UITableViewDataSource {
     }
 }
 
-extension ChatVC: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-            return false
-        }
+extension ChatVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
 }

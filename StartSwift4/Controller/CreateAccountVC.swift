@@ -56,6 +56,7 @@ class CreateAccountVC: UIViewController {
                         AuthService.instance.createUser(name: name, email: email, avatarName: self.avatarName, avatarColor: self.avatarColor, completion: { (success) in
                             if success {
                                 print(UserDataService.instance.name)
+                                NotificationCenter.default.post(name: SET_USER_INFO, object: nil)
                                 self.performSegue(withIdentifier: GO_HOME, sender: nil)
                             }
                         })

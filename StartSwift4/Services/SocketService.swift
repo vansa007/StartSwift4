@@ -60,10 +60,26 @@ class SocketService: NSObject {
             guard let smsId = arr[6] as? String else { return }
             guard let timeStamp = arr[7] as? String else { return }
             let message = Message(message: smsBody, userName: userName, channelId: chId, userAvatar: userAvatar, userAvatarColor: userAvatarColor, id: smsId, timeStamp: timeStamp)
-            MessageService.instance.messageData.append(message)
+            var isExist:Bool = false
+            for sms in MessageService.instance.messageData {
+                if sms.id == message.id {
+                    isExist = true
+                }
+            }
+            if !isExist && chId == MessageService.instance.chSelected.id {
+                MessageService.instance.messageData.append(message)
+            }
             completion(true)
         }
     }
+    
+    func getTypingUsers(_ completionHandler: @escaping (_ typingUsers: [String: String]) -> Void) {
+        socket.on("userTypingUpdate") { (dataArr, ack) in
+            guard let typingUsers = dataArr[0] as? [String: String] else { return }
+            completionHandler(typingUsers)
+        }
+    }
+    
 }
 
 

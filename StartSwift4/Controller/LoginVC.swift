@@ -53,6 +53,7 @@ class LoginVC: UIViewController {
                     AuthService.instance.findUserByEmail(email: self.emailTf.text!, completion: { (success) in
                         if success {
                             sender.loadingIndicator(show: false)
+                            NotificationCenter.default.post(name: SET_USER_INFO, object: nil)
                             self.performSegue(withIdentifier: GO_HOME_LOGGED, sender: nil)
                         }else {
                             self.myAlert(status: 2, message: "Error", title: "We're sorry, please come back again.", loginButton: sender)
