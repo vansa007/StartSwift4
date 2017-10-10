@@ -199,8 +199,22 @@ class SMSCell: UITableViewCell {
         self.avatarImg.image = UIImage(named: data.userAvatar)
         self.avatarImg.backgroundColor = UserDataService.instance.createColor(component: data.userAvatarColor)
         self.userName.text = data.userName
-        self.timeStamp.text = data.timeStamp
+        self.timeStamp.text = ""
         self.sms.text = data.message
+        
+        guard var isoDate = data.timeStamp else { return }
+        let end = isoDate.index(isoDate.endIndex, offsetBy: -5)
+        isoDate = isoDate.substring(to: end)
+        
+        let isoFormatter = ISO8601DateFormatter()
+        let chatDate = isoFormatter.date(from: isoDate.appending("Z"))
+        
+        let newFormatter = DateFormatter()
+        newFormatter.dateFormat = "MMM d, h:mm a"
+        if let finalDate = chatDate {
+            let fDate = newFormatter.string(from: finalDate)
+            self.timeStamp.text = fDate
+        }
     }
     
 }
